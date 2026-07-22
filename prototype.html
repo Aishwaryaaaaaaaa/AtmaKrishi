@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beej Se Gyaan | iPad Prototype</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #E2D9C5;
+      font-family: 'Manrope', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px;
+    }
+    .tablet {
+      width: 900px;
+      max-width: 95vw;
+      background: #1a1a1a;
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    }
+    .screen {
+      background: #ECE5DD;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      height: 600px;
+      background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23d4c9b3" fill-opacity="0.15"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>');
+    }
+    .sidebar {
+      width: 260px;
+      background: #f5f0e6;
+      border-right: 1px solid #d5cab7;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .sidebar h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: #1f1f1f;
+      margin-bottom: 20px;
+    }
+    .saved-item {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-left: 4px solid #075E54;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+    .saved-item:hover {
+      background: #e8e0cf;
+    }
+    .saved-item .title {
+      font-weight: 700;
+      color: #075E54;
+    }
+    .saved-item .detail {
+      font-size: 12px;
+      color: #555;
+    }
+    .chat-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      background: #075E54;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .chat-header .avatar {
+      width: 40px;
+      height: 40px;
+      background: #D9CDB0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #2E4A1A;
+    }
+    .chat-header .info .name {
+      font-weight: 700;
+      font-size: 17px;
+    }
+    .chat-header .info .status {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: #7DE87D;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .row {
+      display: flex;
+      margin-bottom: 4px;
+    }
+    .row.in {
+      justify-content: flex-start;
+    }
+    .row.out {
+      justify-content: flex-end;
+    }
+    .bubble {
+      max-width: 70%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.45;
+      word-wrap: break-word;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .in .bubble {
+      background: #ffffff;
+      border-top-left-radius: 0;
+    }
+    .out .bubble {
+      background: #DCF8C6;
+      border-top-right-radius: 0;
+    }
+    .meta {
+      font-size: 11px;
+      color: #667;
+      text-align: right;
+      margin-top: 4px;
+    }
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .quick-reply {
+      background: #fff;
+      border: 1px solid #075E54;
+      color: #075E54;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 500;
+    }
+    .quick-reply:hover {
+      background: #075E54;
+      color: white;
+    }
+    .voice-bubble {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border-top-left-radius: 0;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .play-btn {
+      width: 34px;
+      height: 34px;
+      background: #075E54;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+    }
+    .play-btn.playing {
+      background: #25D366;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 24px;
+    }
+    .bar {
+      width: 3px;
+      background: #075E54;
+      border-radius: 2px;
+    }
+    .knowledge-card {
+      background: #fff;
+      border-left: 5px solid #075E54;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 4px;
+    }
+    .technique-title {
+      font-weight: 700;
+      color: #075E54;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .verified-badge {
+      background: #25D366;
+      color: white;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .expand-btn {
+      color: #075E54;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+    .detail-text {
+      display: none;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #444;
+      line-height: 1.6;
+    }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #075E54;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .typing {
+      display: flex;
+      gap: 4px;
+      padding: 10px 14px;
+      background: #ffffff;
+      border-radius: 8px;
+      align-self: flex-start;
+    }
+    .typing span {
+      width: 8px;
+      height: 8px;
+      background: #999;
+      border-radius: 50%;
+      animation: blink 1.4s infinite;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink {
+      0%,60%,100% { opacity: 0.3; }
+      30% { opacity: 1; }
+    }
+    .verifying {
+      background: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #444;
+    }
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #075E54;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .chat-footer {
+      background: #f0f0f0;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid #ddd;
+    }
+    .input-field {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 25px;
+      border: none;
+      background: white;
+      font-size: 15px;
+      outline: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .send-btn, .mic-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: #075E54;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mic-btn.recording {
+      background: #e74c3c;
+      animation: pulse-red 1s infinite;
+    }
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.5); }
+      70% { box-shadow: 0 0 0 12px rgba(231, 76, 60, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+    }
+    .back-link {
+      margin-top: 25px;
+      color: #075E54;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    @media(max-width: 950px) {
+      .tablet {
+        width: 100%;
+        border-radius: 15px;
+        padding: 10px;
+      }
+      .screen {
+        flex-direction: column;
+        height: 80vh;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="tablet">
+    <div class="screen">
+      <div class="sidebar">
+        <h3>📚 Saved Techniques</h3>
+        <div class="saved-item" onclick="alert('Technique details (demo)')">
+          <div class="title">गोमूत्र + लसूण अर्क</div>
+          <div class="detail">భూమిగడ్డ ఆకులు పసుపు రంగులోకి మారడం</div>
+        </div>
+        <div class="saved-item" onclick="alert('Technique details (demo)')">
+          <div class="title">దుష్కాల సహనశీల విత్తనాలు</div>
+          <div class="detail">కాళా తూర్, దేశీ బాజ్రా</div>
+        </div>
+        <div style="margin-top:auto; font-size:12px; color:#888;">Synced with KVK database</div>
+      </div>
+      <div class="chat-area">
+        <div class="chat-header">
+          <div class="avatar">🌾</div>
+          <div class="info">
+            <div class="name">Beej Se Gyaan</div>
+            <div class="status"><span class="dot"></span> online · answers in your language</div>
+          </div>
+        </div>
+        <div class="chat-body" id="chatBody">
+          <div class="row in">
+            <div class="bubble">
+              🌱 నమస్కారం! నేను బీజ్ సే జ్ఞాన్ బాట్ ని. దయచేసి భాషను ఎంచుకోండి।<br>
+              <div class="quick-replies" id="langReplies">
+                <span class="quick-reply" data-lang="mr">मराठी</span>
+                <span class="quick-reply" data-lang="hi">हिंदी</span>
+                <span class="quick-reply" data-lang="te">తెలుగు</span>
+                <span class="quick-reply" data-lang="ta">தமிழ்</span>
+                <span class="quick-reply" data-lang="en">English</span>
+              </div>
+              <div class="meta">10:01 AM</div>
+            </div>
+          </div>
+          <div id="dynamicMessages"></div>
+        </div>
+        <div class="chat-footer">
+          <button class="mic-btn" id="micBtn" title="Record voice note">🎤</button>
+          <input type="text" class="input-field" id="userInput" placeholder="Type or tap mic..." autocomplete="off">
+          <button class="send-btn" id="sendBtn">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="index.html" class="back-link">← Back to Beej Se Gyaan</a>
+
+  <script>
+    (function() {
+      const chatBody = document.getElementById('chatBody');
+      const dynamic = document.getElementById('dynamicMessages');
+      const userInput = document.getElementById('userInput');
+      const sendBtn = document.getElementById('sendBtn');
+      const micBtn = document.getElementById('micBtn');
+      const langReplies = document.getElementById('langReplies');
+      let lang = 'te'; // default to Telugu now
+      let step = 0;
+
+      // Language selection
+      langReplies.addEventListener('click', (e) => {
+        if (e.target.classList.contains('quick-reply') && step === 0) {
+          lang = e.target.dataset.lang;
+          document.querySelectorAll('#langReplies .quick-reply').forEach(el => el.style.opacity = '0.5');
+          e.target.style.opacity = '1';
+          step = 1;
+          const { text, replies } = getPromptWithQuickReplies();
+          showBotMessage(text, replies);
+        }
+      });
+
+      function getPromptWithQuickReplies() {
+        const prompts = {
+          mr: '🌾 तुमच्या शेतातील समस्या सांगा — किंवा निवडा:',
+          hi: '🌾 अपनी फसल की समस्या बताएं — या चुनें:',
+          te: '🌾 మీ పంట సమస్యను చెప్పండి — లేదా ఎంచుకోండి:',
+          ta: '🌾 உங்கள் பயிர் பிரச்சனையைச் சொல்லுங்கள் — அல்லது தேர்ந்தெடுக்கவும்:',
+          en: '🌾 Tell us about your crop problem — or pick:'
+        };
+        const quickReplies = [
+          { 
+            label: lang === 'mr' ? 'पानं पिवळी पडत आहेत' : (lang === 'hi' ? 'पत्ते पीले पड़ रहे' : (lang === 'te' ? 'ఆకులు పసుపు రంగులోకి మారుతున్నాయి' : (lang === 'ta' ? 'இலைகள் மஞ்சள் நிறமாக மாறுகின்றன' : 'Leaves turning yellow'))), 
+            action: 'groundnut' 
+          },
+          { 
+            label: lang === 'mr' ? 'दुष्काळासाठी बियाणे' : (lang === 'hi' ? 'सूखे के बीज' : (lang === 'te' ? 'కరువు కోసం విత్తనాలు' : (lang === 'ta' ? 'வறட்சிக்கான விதைகள்' : 'Drought seeds'))), 
+            action: 'drought' 
+          }
+        ];
+        return { text: prompts[lang], replies: quickReplies };
+      }
+
+      function showBotMessage(text, quickReplies = null) {
+        const row = document.createElement('div');
+        row.className = 'row in';
+        let html = `<div class="bubble">${text}`;
+        if (quickReplies) {
+          html += `<div class="quick-replies">${quickReplies.map(q => `<span class="quick-reply" data-action="${q.action}">${q.label}</span>`).join('')}</div>`;
+        }
+        html += `<div class="meta">Just now</div></div>`;
+        row.innerHTML = html;
+        dynamic.appendChild(row);
+        scrollToBottom();
+        if (quickReplies) {
+          row.querySelectorAll('.quick-reply').forEach(el => {
+            el.addEventListener('click', handleQuickReply);
+          });
+        }
+      }
+
+      function handleQuickReply(e) {
+        const action = e.target.dataset.action;
+        const parentRow = e.target.closest('.bubble');
+        if (parentRow) {
+          parentRow.querySelectorAll('.quick-reply').forEach(el => el.style.opacity = '0.5');
+          e.target.style.opacity = '1';
+        }
+        if (action === 'groundnut') handleGroundnutQuery();
+        else if (action === 'drought') handleDroughtQuery();
+      }
+
+      function addOutgoingMessage(text) {
+        const row = document.createElement('div');
+        row.className = 'row out';
+        row.innerHTML = `<div class="bubble">${text}<div class="meta">Just now</div></div>`;
+        dynamic.appendChild(row);
+        scrollToBottom();
+      }
+
+      function showTyping() {
+        const row = document.createElement('div');
+        row.className = 'typing';
+        row.id = 'typingIndicator';
+        row.innerHTML = '<span></span><span></span><span></span>';
+        dynamic.appendChild(row);
+        scrollToBottom();
+      }
+
+      function removeTyping() {
+        const el = document.getElementById('typingIndicator');
+        if (el) el.remove();
+      }
+
+      function showVerifying() {
+        const row = document.createElement('div');
+        row.className = 'verifying';
+        row.id = 'verifyingIndicator';
+        row.innerHTML = '<div class="spinner"></div> Verifying with KVK...';
+        dynamic.appendChild(row);
+        scrollToBottom();
+      }
+
+      function removeVerifying() {
+        const el = document.getElementById('verifyingIndicator');
+        if (el) el.remove();
+      }
+
+      function addVoiceNote(duration) {
+        const row = document.createElement('div');
+        row.className = 'row in';
+        row.innerHTML = `
+          <div class="voice-bubble">
+            <div class="play-btn">▶</div>
+            <div class="waveform">
+              ${Array.from({length: 8}, () => `<div class="bar" style="height:${Math.floor(Math.random()*12+6)}px"></div>`).join('')}
+            </div>
+            <small style="margin-left:6px;">${duration}</small>
+          </div>`;
+        dynamic.appendChild(row);
+        row.querySelector('.voice-bubble').addEventListener('click', function() {
+          this.querySelector('.play-btn').classList.toggle('playing');
+        });
+        scrollToBottom();
+      }
+
+      function addKnowledgeCard(title, detail, source, rating) {
+        const row = document.createElement('div');
+        row.className = 'row in';
+        row.innerHTML = `
+          <div class="bubble knowledge-card">
+            <div class="technique-title">
+              <span>${title}</span>
+              <span class="verified-badge">✓ KVK Verified</span>
+            </div>
+            <div style="font-size:12px; color:#888; margin-top:4px;">⭐ ${rating}</div>
+            <div class="expand-btn">▼ View full technique</div>
+            <div class="detail-text">${detail}<br><small style="color:#888;">Source: ${source}</small></div>
+            <div class="share-btn">↗ Share with my group</div>
+          </div>`;
+        dynamic.appendChild(row);
+        row.querySelector('.expand-btn').addEventListener('click', function() {
+          const detailDiv = this.nextElementSibling;
+          if (detailDiv.style.display === 'block') {
+            detailDiv.style.display = 'none';
+            this.textContent = '▼ View full technique';
+          } else {
+            detailDiv.style.display = 'block';
+            this.textContent = '▲ Hide technique';
+          }
+        });
+        row.querySelector('.share-btn').addEventListener('click', () => {
+          alert('Technique shared to farmer group! (Demo)');
+        });
+        scrollToBottom();
+      }
+
+      function handleGroundnutQuery() {
+        const userMsg = {
+          mr: 'भुईमुगाची पानं पिवळी पडत आहेत',
+          hi: 'मूंगफली के पत्ते पीले पड़ रहे हैं',
+          te: 'వేరుశనగ ఆకులు పసుపు రంగులోకి మారుతున్నాయి',
+          ta: 'வேர்க்கடலை இலைகள் மஞ்சள் நிறமாக மாறுகின்றன',
+          en: 'Groundnut leaves turning yellow'
+        }[lang];
+        addOutgoingMessage(userMsg);
+        showTyping();
+        setTimeout(() => {
+          removeTyping();
+          showVerifying();
+          setTimeout(() => {
+            removeVerifying();
+            const answers = {
+              mr: 'तुमच्या भुईमुगाच्या पानांवर पिवळसरपणा लोहाच्या कमतरतेमुळे किंवा मर रोगामुळे असू शकतो. यावर उपाय:',
+              hi: 'मूंगफली के पत्तों का पीलापन आयरन की कमी या मर रोग से हो सकता है। उपाय:',
+              te: 'వేరుశనగ ఆకుల పసుపు రంగు ఐరన్ లోపం లేదా ఆకు మచ్చ తెగులు వల్ల సంభవించవచ్చు. పరిష్కారం:',
+              ta: 'வேர்க்கடலை இலைகளின் மஞ்சள் நிறம் இரும்புச்சத்து குறைபாடு அல்லது இலைப்புள்ளி நோயால் ஏற்படலாம். தீர்வு:',
+              en: 'Yellowing groundnut leaves may be due to iron deficiency or leaf spot disease. Solution:'
+            };
+            showBotMessage(answers[lang]);
+            addVoiceNote('0:14');
+            addKnowledgeCard(
+              {
+                mr: 'गोमूत्र + लसूण अर्क फवारणी',
+                hi: 'गोमूत्र + लहसुन अर्क छिड़काव',
+                te: 'గోమూత్రం + వెల్లుల్లి సారం పిచికారీ',
+                ta: 'கோமூத்திரம் + பூண்டு சாறு தெளிப்பு',
+                en: 'Cow urine + garlic extract spray'
+              }[lang],
+              {
+                mr: '५ लीटर गोमूत्रात १ किलो लसूण पेस्ट मिसळा, २४ तास ठेवा, १० लीटर पाण्यात मिसळून फवारा.',
+                hi: '5 लीटर गोमूत्र में 1 किलो लहसुन पेस्ट, 24 घंटे रखें, 10 लीटर पानी में मिलाकर छिड़काव।',
+                te: '5 లీటర్ల గోమూత్రంలో 1 కిలో వెల్లుల్లి పేస్ట్ కలపండి, 24 గంటలు ఉంచి, 10 లీటర్ల నీటిలో కలిపి పిచికారీ చేయండి.',
+                ta: '5 லிட்டர் கோமூத்திரத்தில் 1 கிலோ பூண்டு விழுது கலந்து, 24 மணி நேரம் ஊறவைத்து, 10 லிட்டர் நீரில் கலந்து தெளிக்கவும்.',
+                en: 'Mix 1 kg garlic paste in 5 L cow urine, steep 24 hrs, dilute in 10 L water, spray.'
+              }[lang],
+              'KVK నాగ్‌పూర్, రైతు ధృవీకరించబడింది',
+              '4.8/5 (127 రైతులు)'
+            );
+          }, 2000);
+        }, 1500);
+      }
+
+      function handleDroughtQuery() {
+        const userMsg = {
+          mr: 'दुष्काळात कोणते बियाणे चांगले?',
+          hi: 'सूखे में कौन से बीज अच्छे?',
+          te: 'కరువులో ఏ విత్తనాలు మంచివి?',
+          ta: 'வறட்சியில் எந்த விதைகள் நல்லது?',
+          en: 'Which seeds are good for drought?'
+        }[lang];
+        addOutgoingMessage(userMsg);
+        showTyping();
+        setTimeout(() => {
+          removeTyping();
+          showVerifying();
+          setTimeout(() => {
+            removeVerifying();
+            const answers = {
+              mr: 'तुमच्या भागासाठी काळा तूर आणि देशी बाजरी उत्तम. ही बियाणे कमी पाण्यातही चांगले उत्पादन देतात.',
+              hi: 'आपके क्षेत्र में काला तूर और देसी बाजरा बेहतरीन हैं। ये बीज कम पानी में भी अच्छी पैदावार देते हैं।',
+              te: 'మీ ప్రాంతానికి కాళా తూర్ మరియు దేశీ బాజ్రా అద్భుతమైన ఎంపిక. ఈ విత్తనాలు తక్కువ నీటిలో కూడా మంచి దిగుబడినిస్తాయి.',
+              ta: 'உங்கள் பகுதிக்கு கருப்பு உளுந்து மற்றும் தேசி கம்பு சிறந்தவை. இந்த விதைகள் குறைந்த நீரிலும் நல்ல மகசூல் தரும்.',
+              en: 'For your region, black gram and local pearl millet are excellent drought-resistant choices.'
+            };
+            showBotMessage(answers[lang]);
+            addVoiceNote('0:18');
+            addKnowledgeCard(
+              {
+                mr: 'दुष्काळ सहनशील वाण',
+                hi: 'सूखा सहिष्णु किस्में',
+                te: 'కరువు తట్టుకునే రకాలు',
+                ta: 'வறட்சியைத் தாங்கும் வகைகள்',
+                en: 'Drought-tolerant varieties'
+              }[lang],
+              {
+                mr: 'काळा तूर (स्थानिक जात) आणि देशी बाजरी — ३०-४०% कमी पाण्यात चांगले उत्पादन.',
+                hi: 'काला तूर (स्थानीय) और देसी बाजरा — 30-40% कम पानी में अच्छी पैदावार।',
+                te: 'కాళా తూర్ (స్థానిక రకం) మరియు దేశీ బాజ్రా — 30-40% తక్కువ నీటితో మంచి దిగుబడి.',
+                ta: 'கருப்பு உளுந்து (உள்ளூர்) மற்றும் தேசி கம்பு — 30-40% குறைந்த நீரிலும் நல்ல மகசூல்.',
+                en: 'Black gram (local) and desi bajra — good yield even with 30-40% less water.'
+              }[lang],
+              'KVK వార్ధా, సంప్రదాయ జ్ఞానం',
+              '4.9/5 (89 రైతులు)'
+            );
+          }, 2000);
+        }, 1500);
+      }
+
+      function scrollToBottom() {
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+
+      // Text input
+      sendBtn.addEventListener('click', () => {
+        const text = userInput.value.trim();
+        if (text) {
+          addOutgoingMessage(text);
+          userInput.value = '';
+          if (text.includes('పసుపు') || text.includes('पिवळ') || text.includes('yellow') || text.includes('पीले') || text.includes('மஞ்சள்')) {
+            handleGroundnutQuery();
+          } else if (text.includes('కరువు') || text.includes('दुष्काळ') || text.includes('drought') || text.includes('सूखा') || text.includes('வறட்சி')) {
+            handleDroughtQuery();
+          } else {
+            const fallback = {
+              mr: 'कृपया समस्या निवडा किंवा सांगा.',
+              hi: 'कृपया समस्या चुनें या बताएं।',
+              te: 'దయచేసి సమస్యను ఎంచుకోండి లేదా చెప్పండి.',
+              ta: 'தயவுசெய்து சிக்கலைத் தேர்ந்தெடுக்கவும் அல்லது சொல்லவும்.',
+              en: 'Please select or describe the problem.'
+            }[lang];
+            showBotMessage(fallback);
+          }
+        }
+      });
+
+      userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendBtn.click();
+      });
+
+      micBtn.addEventListener('click', () => {
+        micBtn.classList.add('recording');
+        setTimeout(() => {
+          micBtn.classList.remove('recording');
+          const row = document.createElement('div');
+          row.className = 'row out';
+          row.innerHTML = `
+            <div class="voice-bubble" style="background:#DCF8C6;">
+              <div class="waveform">
+                ${Array.from({length: 10}, () => `<div class="bar" style="height:${Math.floor(Math.random()*10+5)}px; background:#075E54;"></div>`).join('')}
+              </div>
+              <small style="margin-left:6px;">0:06</small>
+            </div>`;
+          dynamic.appendChild(row);
+          scrollToBottom();
+          setTimeout(() => {
+            Math.random() > 0.5 ? handleGroundnutQuery() : handleDroughtQuery();
+          }, 800);
+        }, 2000);
+      });
+    })();
+  </script>
+</body>
+</html>
