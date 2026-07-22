@@ -3044,6 +3044,161 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+/*================ COMPETITION ================*/
+
+.competition{
+
+padding:120px 8%;
+
+background:#F8F5EF;
+
+}
+
+.comparison-table{
+
+display:grid;
+
+grid-template-columns:
+2fr repeat(4,1fr);
+
+margin-top:70px;
+
+border-radius:24px;
+
+overflow:hidden;
+
+border:1px solid #E5DDCF;
+
+box-shadow:0 15px 40px rgba(0,0,0,.05);
+
+}
+
+.table-head{
+
+padding:25px;
+
+background:#F3EEE4;
+
+font-weight:700;
+
+text-align:center;
+
+font-size:1.05rem;
+
+color:#214722;
+
+border-bottom:1px solid #E5DDCF;
+
+}
+
+.atma{
+
+background:#4E6C34;
+
+color:white;
+
+}
+
+.feature{
+
+padding:22px;
+
+background:white;
+
+font-weight:600;
+
+color:#333;
+
+border-bottom:1px solid #ECE3D5;
+
+}
+
+.tick,
+.cross{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:1.4rem;
+
+background:white;
+
+border-bottom:1px solid #ECE3D5;
+
+transition:.3s;
+
+}
+
+.tick{
+
+color:#4E6C34;
+
+font-weight:bold;
+
+}
+
+.cross{
+
+color:#B6A98E;
+
+}
+
+.comparison-table>div:hover{
+
+background:#FAF7F2;
+
+}
+
+.competition-note{
+
+margin-top:60px;
+
+padding:40px;
+
+background:#F3EEE4;
+
+border-radius:24px;
+
+text-align:center;
+
+border:1px solid #E5DDCF;
+
+}
+
+.competition-note h3{
+
+color:#214722;
+
+font-size:2rem;
+
+margin-bottom:18px;
+
+}
+
+.competition-note p{
+
+color:#666;
+
+font-size:1.05rem;
+
+line-height:1.8;
+
+}
+
+@media(max-width:1000px){
+
+.comparison-table{
+
+overflow-x:auto;
+
+display:block;
+
+}
+
+}
 /* ================= CHARTS SECTION ================= */
 .charts {
   background: #EFE9DD;
@@ -3127,4 +3282,21 @@ html{
 
 scroll-behavior:smooth;
 
+}
+.divider{
+    width:120px;
+    height:1px;
+
+    margin:40px auto;
+
+    background:linear-gradient(
+        to right,
+        transparent,
+        #D8CCBA,
+        #4E6C34,
+        #D8CCBA,
+        transparent
+    );
+
+    opacity:.8;
 }
