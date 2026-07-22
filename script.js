@@ -137,3 +137,61 @@ entry.target.classList.add("show");
 },{threshold:.2});
 
 reveals.forEach(el=>observer.observe(el));
+// Hover tilt animation
+
+document.querySelectorAll(".road-card").forEach(card=>{
+
+card.addEventListener("mousemove",(e)=>{
+
+const rect=card.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+const y=e.clientY-rect.top;
+
+const rotateY=(x-rect.width/2)/18;
+const rotateX=(rect.height/2-y)/18;
+
+card.style.transform=
+`perspective(900px)
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+translateY(-12px)`;
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.transform="";
+
+});
+
+});
+document.querySelectorAll(".counter").forEach(counter=>{
+
+const target=+counter.dataset.target;
+
+let current=0;
+
+const update=()=>{
+
+const increment=Math.ceil(target/60);
+
+current+=increment;
+
+if(current>=target){
+
+counter.innerText=target;
+
+}else{
+
+counter.innerText=current;
+
+requestAnimationFrame(update);
+
+}
+
+}
+
+update();
+
+});
