@@ -367,6 +367,53 @@
         display: none;
       }
     }
+    .prototype-nav{
+
+display:flex;
+justify-content:center;
+gap:16px;
+
+padding:18px 0;
+
+background:transparent;
+
+border-bottom:1px solid #ECE8DE;
+
+}
+
+.nav-btn{
+
+text-decoration:none;
+
+padding:12px 24px;
+
+border-radius:999px;
+
+border:1.5px solid #7D9163;
+
+color:#506E37;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.nav-btn:hover{
+
+background:#506E37;
+
+color:white;
+
+}
+
+.nav-btn.active{
+
+background:#506E37;
+
+color:white;
+
+}
   </style>
 </head>
 <body>
@@ -416,6 +463,17 @@
       </div>
     </div>
   </div>
+  <div class="prototype-nav">
+
+    <a href="prototype.html" class="nav-btn active">
+        🌱 Agronomy AI
+    </a>
+
+    <a href="finance.html" class="nav-btn">
+        💰 AI CFO
+    </a>
+
+</div>
   <a href="index.html" class="back-link">← Back to Beej Se Gyaan</a>
 
   <script>
