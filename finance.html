@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>AtmaKrishi AI</title>
+
+<link rel="stylesheet" href="finance.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+/>
+
+</head>
+
+<body>
+
+<div class="ipad">
+
+<div class="screen">
+
+<!-- ================================= -->
+<!-- TOP BAR -->
+<!-- ================================= -->
+
+<header>
+<a href="index.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+    Back
+</a>
+<div class="logo">
+
+<div class="logo-circle">
+
+🌱
+
+</div>
+
+<div>
+
+<h2>AtmaKrishi AI</h2>
+
+<p>
+
+Agriculture Intelligence Platform
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="status">
+
+<span class="online"></span>
+
+<select id="language">
+
+<option>🇬🇧 English</option>
+<option>🇮🇳 हिन्दी</option>
+<option>🇮🇳 मराठी</option>
+<option>🇮🇳 తెలుగు</option>
+<option>🇮🇳 தமிழ்</option>
+<option>🇮🇳 ಕನ್ನಡ</option>
+<option>🇮🇳 ਪੰਜਾਬੀ</option>
+
+</select>
+
+</div>
+
+</header>
+
+
+
+
+
+<!-- ================================= -->
+<!-- FEATURE TABS -->
+<!-- ================================= -->
+
+<div class="tabs">
+
+<button class="tab active">
+
+🌾 Crop AI
+
+</button>
+
+<button class="tab">
+
+💰 AI CFO
+
+</button>
+
+<button class="tab">
+
+📈 Market
+
+</button>
+
+<button class="tab">
+
+📄 Reports
+
+</button>
+
+<button class="tab">
+
+🎤 Voice
+
+</button>
+
+</div>
+
+
+
+
+
+<!-- ================================= -->
+<!-- HOME -->
+<!-- ================================= -->
+
+<div id="home">
+
+<h1>
+
+👋 Namaste!
+
+</h1>
+
+<p>
+
+How can AtmaKrishi AI help you today?
+
+</p>
+
+
+
+
+
+<div class="grid">
+
+
+
+<div class="card">
+
+<div class="icon">
+
+🌾
+
+</div>
+
+<h3>
+
+Crop Advisor
+
+</h3>
+
+<p>
+
+Disease Detection
+
+<br>
+
+Traditional Remedies
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="icon">
+
+💰
+
+</div>
+
+<h3>
+
+AI CFO
+
+</h3>
+
+<p>
+
+Farm Finance
+
+<br>
+
+Profit Analysis
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="icon">
+
+📈
+
+</div>
+
+<h3>
+
+Market Prices
+
+</h3>
+
+<p>
+
+Live Trends
+
+<br>
+
+Sell Timing
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="icon">
+
+📄
+
+</div>
+
+<h3>
+
+Farm Report
+
+</h3>
+
+<p>
+
+AI Generated
+
+<br>
+
+PDF Export
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="icon">
+
+🎤
+
+</div>
+
+<h3>
+
+Voice Assistant
+
+</h3>
+
+<p>
+
+Hindi
+
+<br>
+
+English
+
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<div class="icon">
+
+📷
+
+</div>
+
+<h3>
+
+Scan Crop
+
+</h3>
+
+<p>
+
+Upload Leaf
+
+<br>
+
+AI Detection
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- ================================= -->
+<!-- CHAT AREA -->
+<!-- ================================= -->
+
+<div id="chatArea">
+
+</div>
+
+
+
+
+
+<!-- ================================= -->
+<!-- INPUT -->
+<!-- ================================= -->
+
+<div class="bottom">
+
+<button>
+
+<i class="fa-solid fa-paperclip"></i>
+
+</button>
+
+<input
+
+placeholder="Ask AtmaKrishi AI anything..."
+
+>
+
+<button>
+
+<i class="fa-solid fa-microphone"></i>
+
+</button>
+
+<button class="send">
+
+<i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+</div> <!-- bottom -->
+
+</div> <!-- screen -->
+
+</div> <!-- ipad -->
+
+<!-- ==========================================
+AI REPORT MODAL
+========================================== -->
+
+<div id="reportModal">
+
+    <div class="report">
+
+        <div class="report-header">
+
+            <div>
+
+                <h2>🌱 AtmaKrishi AI</h2>
+
+                <p>Financial Health Report</p>
+
+            </div>
+
+            <button class="close-btn" onclick="closeReport()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <div class="score">
+
+            <h1>92</h1>
+
+            <p>Financial Health Score</p>
+
+        </div>
+
+
+
+        <div class="report-grid">
+
+            <div>
+
+                <span>Revenue</span>
+
+                <h3>₹1,82,000</h3>
+
+            </div>
+
+            <div>
+
+                <span>Expenses</span>
+
+                <h3>₹94,000</h3>
+
+            </div>
+
+            <div>
+
+                <span>Profit</span>
+
+                <h3>₹88,000</h3>
+
+            </div>
+
+            <div>
+
+                <span>ROI</span>
+
+                <h3>48%</h3>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="recommend-box">
+
+            <h3>🧠 AI Recommendations</h3>
+
+            <ul>
+
+                <li>Delay fertilizer purchase by 5 days.</li>
+
+                <li>Apply for PM-KISAN subsidy.</li>
+
+                <li>Sell tomatoes next week for higher prices.</li>
+
+                <li>Projected cash flow is positive.</li>
+
+            </ul>
+
+        </div>
+
+
+
+        <div class="report-buttons">
+
+            <button class="download">
+
+                <i class="fa-solid fa-download"></i>
+
+                Download PDF
+
+            </button>
+
+            <button class="share">
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+                Share
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="finance.js"></script>
+<div id="voicePopup">
+
+<div class="voice-box">
+
+<h2>
+
+🎤 Listening...
+
+</h2>
+
+<div class="wave">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+<p>
+
+Speak in your preferred language
+
+</p>
+
+<button onclick="closeVoice()">
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+</body>
+</html>
+
+
+
